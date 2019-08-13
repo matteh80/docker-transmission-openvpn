@@ -35,7 +35,14 @@ RUN apt update \
     && apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && groupmod -g 1000 users \
     && useradd -u 911 -U -d /config -s /bin/false abc \
-    && usermod -G users abc
+    && usermod -G users abc \
+    && usermod -a -G debian-transmission abc
+
+RUN apt update \
+    && apt install -y apt-transport-https \
+    &&  wget https://raw.githubusercontent.com/filebot/plugins/master/installer/deb.sh \
+    && chmod a+x deb.sh \
+    && ./deb.sh
 
 ADD openvpn/ /etc/openvpn/
 ADD transmission/ /etc/transmission/
