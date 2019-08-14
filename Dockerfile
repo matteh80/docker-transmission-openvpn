@@ -51,6 +51,7 @@ ADD openvpn/ /etc/openvpn/
 ADD transmission/ /etc/transmission/
 ADD tinyproxy /opt/tinyproxy/
 ADD scripts /etc/scripts/
+ADD filebot /etc/filebot
 
 ENV OPENVPN_USERNAME=**None** \
     OPENVPN_PASSWORD=**None** \
@@ -145,6 +146,8 @@ ENV OPENVPN_USERNAME=**None** \
     HEALTH_CHECK_HOST=google.com
 
 HEALTHCHECK --interval=5m CMD /etc/scripts/healthcheck.sh
+
+CMD ["/etc/filebot/start.sh"]
 
 # Expose port and run
 EXPOSE 9091
