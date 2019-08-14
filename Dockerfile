@@ -36,7 +36,10 @@ RUN apt update \
     && groupmod -g 1000 users \
     && useradd -u 911 -U -d /config -s /bin/false abc \
     && usermod -G users abc \
-    && usermod -a -G debian-transmission abc
+    && usermod -a -G debian-transmission abc \
+    && usermod -d /config debian-transmission
+
+#ENV JAVA_OPTS "-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8 -DuseGVFS=false -Djava.net.useSystemProxies=false -Dapplication.deployment=docker -Dapplication.dir=/config -Duser.home=/config -Djava.io.tmpdir=/config/tmp -Djava.util.prefs.PreferencesFactory=net.filebot.util.prefs.FilePreferencesFactory -Dnet.filebot.util.prefs.file=/config/prefs.properties"
 
 RUN apt update \
     && apt install -y apt-transport-https \
@@ -52,7 +55,7 @@ ADD scripts /etc/scripts/
 ENV OPENVPN_USERNAME=**None** \
     OPENVPN_PASSWORD=**None** \
     OPENVPN_PROVIDER=**None** \
-    GLOBAL_APPLY_PERMISSIONS=true \
+    GLOBAL_APPLY_PERMISSIONS=false \
     TRANSMISSION_ALT_SPEED_DOWN=50 \
     TRANSMISSION_ALT_SPEED_ENABLED=false \
     TRANSMISSION_ALT_SPEED_TIME_BEGIN=540 \
